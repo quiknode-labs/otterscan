@@ -95,6 +95,11 @@ export type OtterscanConfig = {
    * initialization.
    */
   chainInfo?: ChainInfo;
+
+  /**
+   * (optional) Custom logo URL to be used.
+   */
+  customLogo?: string;
 };
 
 /**

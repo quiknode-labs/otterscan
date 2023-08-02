@@ -8,6 +8,7 @@ import { RuntimeContext } from "./useRuntime";
 import { useGenericSearch } from "./search/search";
 // @ts-expect-error
 import Otter from "./otter.png?w=64&h=64&webp";
+import { useConfig } from "./useConfig";
 
 const CameraScanner = lazy(() => import("./search/CameraScanner"));
 
@@ -15,6 +16,13 @@ const Header: FC = () => {
   const { provider } = useContext(RuntimeContext);
   const [searchRef, handleChange, handleSubmit] = useGenericSearch();
   const [isScanning, setScanning] = useState<boolean>(false);
+  const config = useConfig();
+  let logo;
+  if (config?.customLogo) {
+    logo = config.customLogo;
+  } else {
+    logo = Otter;
+  }
 
   return (
     <>
@@ -24,7 +32,7 @@ const Header: FC = () => {
           <div className="flex items-center space-x-2 font-title text-2xl font-bold text-link-blue">
             <img
               className="rounded-full"
-              src={Otter}
+              src={logo}
               width={32}
               height={32}
               alt="An otter scanning"
