@@ -100,6 +100,16 @@ export type OtterscanConfig = {
    * (optional) Custom logo URL to be used.
    */
   customLogo?: string;
+
+  /**
+   * (optional) Custom footer message to be used.
+   */
+  customFooterMessage?: string;
+
+  /**
+   * (optional) Custom header name to be used.
+   */
+  customHeaderName?: string;
 };
 
 /**

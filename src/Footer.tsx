@@ -1,10 +1,16 @@
 import React, { useContext } from "react";
 import { RuntimeContext } from "./useRuntime";
+import { useConfig } from "./useConfig";
 
 const Footer: React.FC = () => {
   const { provider } = useContext(RuntimeContext);
+  const config = useConfig();
 
-  return (
+  return config?.customFooterMessage ? (
+      <div className={`w-full border-t border-t-gray-100 px-2 py-1 text-xs bg-link-blue text-gray-200`}>
+        {config.customFooterMessage}
+      </div>
+      ) : (
     <div
       className={`w-full border-t border-t-gray-100 px-2 py-1 text-xs ${
         provider?.network.chainId === 1

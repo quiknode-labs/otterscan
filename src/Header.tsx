@@ -24,6 +24,11 @@ const Header: FC = () => {
     logo = Otter;
   }
 
+  let headerName = "Otterscan";
+  if (config?.customHeaderName) {
+    headerName = config.customHeaderName;
+  }
+
   return (
     <>
       {isScanning && <CameraScanner turnOffScan={() => setScanning(false)} />}
@@ -38,7 +43,7 @@ const Header: FC = () => {
               alt="An otter scanning"
               title="An otter scanning"
             />
-            <span>Otterscan</span>
+            <span>{headerName}</span>
           </div>
         </Link>
         <div className="flex items-baseline space-x-3">

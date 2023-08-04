@@ -12,6 +12,11 @@ const Logo: React.FC = () => {
     logo = Otter;
   }
 
+  let headerName = "Otterscan";
+  if (config?.customHeaderName) {
+    headerName = config.customHeaderName;
+  }
+
   return (
     <div className="flex cursor-default items-center justify-center space-x-4 font-title text-6xl font-bold text-link-blue">
       <img
@@ -22,7 +27,7 @@ const Logo: React.FC = () => {
         alt="An otter scanning"
         title="An otter scanning"
       />
-      <span>Otterscan</span>
+      <span>{headerName}</span>
     </div>
   );
 };
