@@ -7,7 +7,7 @@ const Footer: React.FC = () => {
   const config = useConfig();
 
   return config?.customFooterMessage ? (
-      <div className={`w-full border-t border-t-gray-100 px-2 py-1 text-xs bg-link-blue text-gray-200`}>
+      <div className={`w-full border-t border-t-gray-100 px-2 py-1 text-xs bg-link-blue text-gray-200 text-center`}>
         {config.customFooterMessage}
       </div>
       ) : (
