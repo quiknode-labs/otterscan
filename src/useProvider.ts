@@ -55,27 +55,6 @@ export const useProvider = (
         provider = new JsonRpcBatchProvider(erigonURL);
       }
 
-      // Check if it is at least a regular ETH node
-      let blockNumber: number = 0;
-      try {
-        blockNumber = await provider.getBlockNumber();
-      } catch (err) {
-        console.log(err);
-        setConnStatus(ConnectionStatus.NOT_ETH_NODE);
-        setProvider(undefined);
-        return;
-      }
-
-      // Check if it is an Erigon node by probing a lightweight method
-      try {
-        await provider.send("erigon_getHeaderByNumber", [blockNumber]);
-      } catch (err) {
-        console.log(err);
-        setConnStatus(ConnectionStatus.NOT_ERIGON);
-        setProvider(undefined);
-        return;
-      }
-
       // Check if it has Otterscan patches by probing a lightweight method
       try {
         const level = await provider.send("ots_getApiLevel", []);
