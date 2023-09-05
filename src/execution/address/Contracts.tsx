@@ -24,7 +24,12 @@ const Contracts: React.FC<ContractsProps> = ({ checksummedAddress, match }) => {
   const [selected, setSelected] = useState<string>();
   useEffect(() => {
     if (match) {
-      setSelected(Object.keys(match.metadata.sources)[0]);
+      const targetSource = match.metadata.settings?.compilationTarget;
+      if (targetSource !== undefined && Object.keys(targetSource)[0] !== "") {
+        setSelected(Object.keys(targetSource)[0]);
+      } else {
+        setSelected(Object.keys(match.metadata.sources)[0]);
+      }
     }
   }, [match]);
   const optimizer = match?.metadata.settings?.optimizer;
@@ -86,7 +91,7 @@ const Contracts: React.FC<ContractsProps> = ({ checksummedAddress, match }) => {
                       <ExternalLink
                         href={openInRemixURL(
                           checksummedAddress,
-                          provider.network.chainId
+                          provider._network.chainId
                         )}
                       >
                         Open in Remix
@@ -122,7 +127,7 @@ const Contracts: React.FC<ContractsProps> = ({ checksummedAddress, match }) => {
                   ) : (
                     <ContractFromRepo
                       checksummedAddress={checksummedAddress}
-                      networkId={provider!.network.chainId}
+                      networkId={provider!._network.chainId}
                       filename={selected}
                       type={match.type}
                     />
