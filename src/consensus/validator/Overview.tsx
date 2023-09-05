@@ -1,6 +1,5 @@
 import { FC, useEffect } from "react";
 import { BigNumber } from "@ethersproject/bignumber";
-import { commify } from "@ethersproject/units";
 import ContentFrame from "../../components/ContentFrame";
 import InfoRow from "../../components/InfoRow";
 import NativeTokenAmountAndFiat from "../../components/NativeTokenAmountAndFiat";
@@ -9,6 +8,7 @@ import Timestamp from "../../components/Timestamp";
 import HexValue from "../../components/HexValue";
 import EpochLink from "../components/EpochLink";
 import { useEpochTimestamp, useValidator } from "../../useConsensus";
+import { commify } from "../../utils/utils";
 
 const GWEI = BigNumber.from(10).pow(9);
 
@@ -25,7 +25,7 @@ const Overview: FC<OverviewProps> = ({ validatorIndex }) => {
     }
   }, [validatorIndex, validator]);
 
-  const elegibleTimestamp = useEpochTimestamp(
+  const eligibleTimestamp = useEpochTimestamp(
     validator?.data.validator.activation_eligibility_epoch
   );
   const activationTimestamp = useEpochTimestamp(
@@ -61,24 +61,30 @@ const Overview: FC<OverviewProps> = ({ validatorIndex }) => {
             />
           </InfoRow>
           <InfoRow title="Status">{validator.data.status}</InfoRow>
-          <InfoRow title="Eligible Epoch">
-            <div className="flex space-x-2">
-              <EpochLink
-                epochNumber={
-                  validator.data.validator.activation_eligibility_epoch
-                }
-              />
-              {elegibleTimestamp && <Timestamp value={elegibleTimestamp} />}
-            </div>
-          </InfoRow>
-          <InfoRow title="Activation Epoch">
-            <div className="flex space-x-2">
-              <EpochLink
-                epochNumber={validator.data.validator.activation_epoch}
-              />
-              {activationTimestamp && <Timestamp value={activationTimestamp} />}
-            </div>
-          </InfoRow>
+          {eligibleTimestamp && (
+            <InfoRow title="Eligible Epoch">
+              <div className="flex space-x-2">
+                <EpochLink
+                  epochNumber={
+                    validator.data.validator.activation_eligibility_epoch
+                  }
+                />
+                {eligibleTimestamp && <Timestamp value={eligibleTimestamp} />}
+              </div>
+            </InfoRow>
+          )}
+          {activationTimestamp && (
+            <InfoRow title="Activation Epoch">
+              <div className="flex space-x-2">
+                <EpochLink
+                  epochNumber={validator.data.validator.activation_epoch}
+                />
+                {activationTimestamp && (
+                  <Timestamp value={activationTimestamp} />
+                )}
+              </div>
+            </InfoRow>
+          )}
           {exitTimestamp && (
             <InfoRow title="Exit Epoch">
               <div className="flex space-x-2">
